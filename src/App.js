@@ -1,15 +1,20 @@
 // App.js
-
 import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import CarForm from './components/CarForm';
-// import './CarForm.css'; // Import the CSS file
+import Invoice from './components/Invoice';
 
 function App() {
   return (
-    <div className="container"> {/* Add this wrapping div */}
-      <h1>Car Dealer Billing Form</h1>
-      <CarForm />
-    </div>
+    <Router>
+      <div className="container">
+        <h1>Car Dealer Billing Form</h1>
+        <Routes>
+          <Route path="/" element={<CarForm />} />
+          <Route path="/invoice" element={<Invoice />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

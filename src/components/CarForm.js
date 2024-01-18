@@ -1,4 +1,6 @@
+// CarForm.js
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './CarForm.css';
 
 const CarForm = () => {
@@ -7,7 +9,7 @@ const CarForm = () => {
   const [insurance, setInsurance] = useState(false);
   const [accessories, setAccessories] = useState(false);
   const [dealerDiscount, setDealerDiscount] = useState(0);
-  const [totalCost, setTotalCost] = useState(0);
+  const [totalCost, setTotalCost] = useState(null);
 
   // Define the data tables for car prices and additional costs
   const carPrices = {
@@ -43,10 +45,12 @@ const CarForm = () => {
     const appliedDiscount = Math.min(dealerDiscount, 30000);
 
     // Calculate total cost
-    const totalCost = carPrice * 100000 + totalAdditionalCost - appliedDiscount;
+    const calculatedTotalCost = carPrice * 100000 + totalAdditionalCost - appliedDiscount;
 
-    return totalCost;
+    return calculatedTotalCost;
   };
+
+  const navigate = useNavigate();
 
   // Function to handle form submission
   const handleSubmit = (e) => {
@@ -110,6 +114,9 @@ const CarForm = () => {
       {totalCost !== null && (
         <div>
           <h2>Total Cost: {Intl.NumberFormat().format(totalCost.toFixed(2))} INR</h2>
+          <button type="button" onClick={() => navigate('/invoice', { state: { carModel, insurance, accessories, dealerDiscount, totalCost } })}>
+            Generate Invoice
+          </button>
         </div>
       )}
     </form>
@@ -117,4 +124,3 @@ const CarForm = () => {
 };
 
 export default CarForm;
-
